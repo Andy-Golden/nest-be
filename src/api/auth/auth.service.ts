@@ -1,33 +1,30 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginRequestDto } from './dto/login-request.dto';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from '../user/user.service';
 import { LoginResponseDto } from './dto/login-response.dto';
+
+const user = {
+  email: 'test@gmail.com',
+  password: 'Hello@1',
+};
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    private userService: UserService,
-  ) {}
+  constructor(private jwtService: JwtService) {}
 
   async login(loginRequestDto: LoginRequestDto): Promise<LoginResponseDto> {
     if (
-      loginRequestDto.email === 'andy.nguyen.goldenowl@gmail.com' &&
-      loginRequestDto.password === '1'
+      loginRequestDto.email !== user.email ||
+      loginRequestDto.password !== user.password
     ) {
-      const accessToken = this.jwtService.sign({
-        email: 'andy.nguyen.goldenowl@gmail.com',
-        password: '1',
-      });
-
-      return {
-        email: 'andy.nguyen.goldenowl@gmail.com',
-        password: '1',
-        accessToken,
-      };
+      throw new UnauthorizedException();
     }
 
-    throw new BadRequestException();
+    const accessToken = this.jwtService.sign({ id: 1, email: user.email });
+
+    return {
+      email: loginRequestDto.email,
+      accessToken,
+    };
   }
 }
