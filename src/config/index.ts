@@ -1,3 +1,5 @@
+import { Time } from '@/utils/constants';
+
 export default () => ({
   swagger: {
     siteTitle: 'Basic NestJS Template | Documentation',
@@ -14,4 +16,10 @@ export default () => ({
     },
   },
   jwt: { secret: process.env.JWT_SECRET },
+  token: {
+    authentication: {
+      lifetime: 30 * Time.ONE_DAY,
+      renewedTimes: 4,
+    },
+  },
 });

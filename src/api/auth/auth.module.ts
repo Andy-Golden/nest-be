@@ -16,7 +16,9 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('jwt.secret'),
         signOptions: {
-          expiresIn: '60s',
+          expiresIn: parseInt(
+            configService.get('token.authentication.lifetime'),
+          ),
         },
       }),
     }),
