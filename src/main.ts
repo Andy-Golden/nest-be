@@ -3,10 +3,12 @@ import { AppModule } from '@/app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import configuration from '@/config';
 import { SecuritySchemeObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
 
   const config = configuration();
 
