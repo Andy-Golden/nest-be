@@ -4,7 +4,7 @@ import { Controller, Get, Request } from '@nestjs/common';
 export class UserController {
   constructor() {}
 
-  @Get()
+  @Get('me')
   getMe(@Request() req) {
     return req.user;
   }

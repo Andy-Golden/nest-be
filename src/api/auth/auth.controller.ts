@@ -1,11 +1,13 @@
 import { Controller, Post, Body } from '@nestjs/common';
+import { Public } from '@/decorators';
 import { AuthService } from './auth.service';
-import { LoginRequestDto } from './dto/login-request.dto';
-import { LoginResponseDto } from './dto/login-response.dto';
-import { Public } from '../../decorators/public.decorator';
-import { RegisterRequestDto } from './dto/register-request.dto';
-import { RegisterResponseDto } from './dto/register-response.dto';
-import { ActivateRequestDto } from './dto/activate-request.dto';
+import {
+  LoginRequestDto,
+  LoginResponseDto,
+  RegisterRequestDto,
+  RegisterResponseDto,
+  ActivateRequestDto,
+} from './dto';
 
 @Public()
 @Controller('auth')
