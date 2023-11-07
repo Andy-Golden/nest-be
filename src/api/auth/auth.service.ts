@@ -10,15 +10,7 @@ import { RegisterRequestDto } from './dto/register-request.dto';
 import { RegisterResponseDto } from './dto/register-response.dto';
 import { ActivateRequestDto } from './dto/activate-request.dto';
 import { VerifyPayload } from '@/interfaces';
-
-const user = {
-  email: 'test@gmail.com',
-  password: 'Hello@1',
-};
-
-const activateUser = {
-  email: 'nguyenkhoa438@gmail.com',
-};
+import { User } from '@/utils/constants';
 
 @Injectable()
 export class AuthService {
@@ -26,13 +18,13 @@ export class AuthService {
 
   async login(loginRequestDto: LoginRequestDto): Promise<LoginResponseDto> {
     if (
-      loginRequestDto.email !== user.email ||
-      loginRequestDto.password !== user.password
+      loginRequestDto.email !== User.user.email ||
+      loginRequestDto.password !== User.user.password
     ) {
       throw new UnauthorizedException();
     }
 
-    const accessToken = this.jwtService.sign({ id: 1, email: user.email });
+    const accessToken = this.jwtService.sign({ id: 1, email: User.user.email });
 
     return {
       email: loginRequestDto.email,
@@ -49,7 +41,7 @@ export class AuthService {
       throw new BadRequestException();
     }
 
-    if (registerRequestDto.email === user.email) {
+    if (registerRequestDto.email === User.user.email) {
       throw new BadRequestException();
     }
 
@@ -72,7 +64,7 @@ export class AuthService {
       activateRequestDto.verifyToken,
     );
 
-    if (payload.email === activateUser.email) {
+    if (payload.email === User.activateUser.email) {
       throw new BadRequestException();
     }
 
