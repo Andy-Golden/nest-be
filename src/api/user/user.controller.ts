@@ -1,11 +1,12 @@
-import { Controller, Get, Request } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   @Get('me')
-  getMe(@Request() req) {
-    return req.user;
+  async getMe() {
+    return await this.userService.getMe();
   }
 }
